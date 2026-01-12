@@ -1,0 +1,161 @@
+body {
+  background-color: #000000;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
+    linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.95) 18%, rgba(0, 0, 0, 0.6) 35%, rgba(0, 0, 0, 0) 60%),
+    url('./images/lala.png');
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: center, center, right center;
+  background-size: cover, cover, auto 100vh;
+  background-attachment: fixed, fixed, fixed;
+}
+
+@supports (height: 100svh) {
+  body {
+    background-size: cover, cover, auto 100svh;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll, scroll, scroll;
+  }
+}
+
+:root {
+  --electric-color: #22c55e;
+  --electric-color-2: #4ade80;
+  --electric-color-light: #86efac;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes electricRotate { to { transform: rotate(360deg); } }
+
+@keyframes electricPulse {
+  0%, 100% { transform: scale(0.98); opacity: 0.35; }
+  50% { transform: scale(1.02); opacity: 0.6; }
+}
+
+@keyframes electricGlowPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes iosCardBounce {
+  0% { -webkit-transform: scale(0.95); transform: scale(0.95); opacity: 0.9; }
+  50% { -webkit-transform: scale(1.08); transform: scale(1.08); }
+  100% { -webkit-transform: scale(1); transform: scale(1); opacity: 1; }
+}
+@-webkit-keyframes iosCardBounce {
+  0% { -webkit-transform: scale(0.95); transform: scale(0.95); opacity: 0.9; }
+  50% { -webkit-transform: scale(1.08); transform: scale(1.08); }
+  100% { -webkit-transform: scale(1); transform: scale(1); opacity: 1; }
+}
+
+/* ===== ELECTRIC CARD WRAPPER ===== */
+
+.electric-card-wrapper {
+  position: relative;
+  padding: 3px;
+  border-radius: 1.8rem;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.electric-card-wrapper.is-active {
+  z-index: 30;
+}
+
+/* ===== ELECTRIC FRAME ANIMATIONS ===== */
+
+@keyframes electricFrameIn {
+  0% { opacity: 0; transform: scale(0.95); }
+  50% { opacity: 0.7; transform: scale(1.02); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes electricFrameOut {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.03); }
+}
+
+/* ===== ELECTRIC BORDER CONTAINER ===== */
+/* This is disabled on iOS via JS */
+.electric-border-container {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  animation: electricFrameIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.electric-border-container.is-leaving { animation: electricFrameOut 0.4s ease-out forwards; }
+.electric-inner { position: relative; width: 100%; height: 100%; }
+.electric-border-outer {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.8rem;
+  border: 2px solid rgba(34, 197, 94, 0.4);
+  padding-right: 5px;
+  padding-bottom: 5px;
+}
+.electric-border-main {
+  width: calc(100% + 5px);
+  height: calc(100% + 5px);
+  border-radius: 1.8rem;
+  border: 3px solid var(--electric-color);
+  margin-top: -5px;
+  margin-left: -5px;
+  filter: url(#electric-displace);
+  -webkit-filter: url(#electric-displace);
+}
+
+/* Glow layer 1 - minimal */
+.electric-glow-1 {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.8rem;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  pointer-events: none;
+}
+
+
+/* Glow layer 2 - subtle blur only */
+.electric-glow-2 {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.8rem;
+  border: 2px solid var(--electric-color);
+  filter: blur(3px);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Overlay effect 1 - REMOVED (display none) */
+.electric-overlay-1 {
+  display: none;
+}
+
+/* Overlay effect 2 - REMOVED (display none) */
+.electric-overlay-2 {
+  display: none;
+}
+
+/* Background glow - MINIMAL */
+.electric-bg-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.8rem;
+  filter: blur(20px);
+  transform: scale(1.05);
+  opacity: 0.2;
+  z-index: -1;
+  background: var(--electric-color);
+  pointer-events: none;
+}
+
+/* Card Bounce Animation */
+.ios-bounce {
+  -webkit-animation: iosCardBounce 0.6s ease-out;
+  animation: iosCardBounce 0.6s ease-out;
+}
